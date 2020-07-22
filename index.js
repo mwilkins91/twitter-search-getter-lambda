@@ -1,4 +1,6 @@
 var Twitter = require("twitter");
+console.log(process.env);
+
 var client = new Twitter({
   consumer_key: process.env.TWTR_KEY,
   consumer_secret: process.env.TWTR_SECRET,
@@ -7,6 +9,9 @@ var client = new Twitter({
 
 exports.handler = async (event, context, cb) => {
   const q = event.queryStringParameters.q;
-  const res = await client.get("/search/tweets.json", { q: q });
-  cb(res);
+  const res = await client.get("/search/tweets.json", {
+    q: q,
+    result_type: "recent",
+  });
+  return res.statuses;
 };
