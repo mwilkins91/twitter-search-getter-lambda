@@ -13,5 +13,10 @@ exports.handler = async (event, context, cb) => {
     q: q,
     result_type: "recent",
   });
-  return res.statuses;
+  return {
+    isBase64Encoded: false,
+    statusCode: 200,
+    headers: {},
+    body: JSON.stringify(res.statuses),
+  };
 };
